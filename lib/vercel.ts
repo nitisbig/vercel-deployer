@@ -41,6 +41,20 @@ export async function exchangeCodeForToken(
   return json;
 }
 
+export async function getTeam(
+  token: string,
+  teamId: string
+): Promise<{ name?: string; slug?: string }> {
+  const res = await fetch(`${API}/v2/teams/${teamId}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  const json = await res.json();
+  if (!res.ok) {
+    throw new Error(json?.error?.message || "Failed to fetch Vercel team");
+  }
+  return { name: json.name, slug: json.slug };
+}
+
 export async function getUser(token: string): Promise<VercelUser> {
   const res = await fetch(`${API}/v2/user`, {
     headers: { Authorization: `Bearer ${token}` },

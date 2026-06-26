@@ -56,6 +56,10 @@ export default function Home() {
     const err = params.get("error");
     if (err === "oauth_not_configured") {
       setAuthError("OAuth isn't configured. Use an access token below, or set up an integration.");
+    } else if (err === "integration_slug_missing") {
+      setAuthError(
+        "Set VERCEL_INTEGRATION_SLUG in .env.local (your integration's URL slug), then restart the dev server."
+      );
     } else if (err) {
       setAuthError(decodeURIComponent(err));
     }
